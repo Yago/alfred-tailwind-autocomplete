@@ -36,22 +36,19 @@ const sanitize = str => {
         i.selectors?.length === 1 &&
         !i.selectors?.join('').includes(':')
       )
-      .map(i => ({
-        uid: i.selectors
-          .join('')
-          .replace('\\', ''),
-        title: i.selectors
-          .join('')
-          .replace('\\', ''),
-        subtitle: i.declarations
+      .map(i => {
+        const title = i.selectors.join('').replace('\\', '');
+        const values = i.declarations
           .map(j => `${j.property}: ${sanitize(j.value)}`)
           .join('; ')
-          .replace(/\s!important/gm, ''),
-        arg: i.selectors
-          .join('')
-          .replace('\\', '')
-          .replace(/^\./, ''),
-      })),
+          .replace(/\s!important/gm, '');
+        return {
+          uid: `${title} ${values}`,
+          title,
+          subtitle: values,
+          arg: title.replace(/^\./, ''),
+        }
+      }),
     { spaces: 2 }
   );
 

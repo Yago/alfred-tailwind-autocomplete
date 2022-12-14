@@ -12,6 +12,9 @@ const slug = path.split('/').at(-1)?.toLowerCase() ?? 'unknown';
 const { current } = require(`${root}/current.json`);
 const db = require(`${root}/dbs/${current}.json`);
 
-console.log(JSON.stringify({items: db.filter(i => i.uid.includes(keyword))}));
+console.log(JSON.stringify({
+  skipknowledge: true,
+  items: db.filter(i => i.uid.includes(keyword))
+}));
 
 
